@@ -16,7 +16,6 @@ const pageText = [
   "I treasure you so very much;\nI hope you share\nthe same sentiment",
   "Here's a picture of a deer (click next bc ion know how to code)",
   "",
-
 ];
 
 export default function App() {
@@ -72,7 +71,7 @@ export default function App() {
         <div className={`textbox ${visible ? "visible" : ""}`}>
           {page === 11 ? (
             <img
-              src="/deer.jpeg"   
+              src="/deer.jpeg"
               alt="A deer"
               className="page-image"
             />
@@ -83,14 +82,19 @@ export default function App() {
               </div>
             ))
           )}
-
         </div>
       </div>
 
       {/* Music controls */}
       <div className="music-controls">
+        {/* Now Playing: Image + Song Name */}
+        <div className="now-playing">
+        <img src="/stuff/laufey.jpg" alt="Album art" className="song-art" />
+          <span className="song-title">Now Playing: Lover Girl</span>
+        </div>
+
         <button className="music-toggle" onClick={toggleMusic}>
-          {playing ? "Pause Music" : "Play Music"}
+          {playing ? "||" : "▶"}
         </button>
 
         <input
@@ -104,8 +108,10 @@ export default function App() {
         />
       </div>
 
+      {/* Page number */}
       <div className="page-box visible">{pages[page]}</div>
 
+      {/* Navigation buttons */}
       <div className="nav-buttons">
         <button
           onClick={() => setPage((p) => Math.max(p - 1, 0))}

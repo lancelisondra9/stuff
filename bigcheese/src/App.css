@@ -165,6 +165,32 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
+/* =========================
+   Now Playing (album art + song title)
+========================= */
+.now-playing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 120px; /* keeps it contained inside controls */
+}
+
+.song-art {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.song-title {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Play / Pause */
 .music-toggle {
   padding: 6px 16px;
