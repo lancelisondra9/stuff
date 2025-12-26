@@ -1,42 +1,236 @@
-#root {
-  max-width: 1280px;
+.container {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+/* Main text */
+.textbox {
+  max-width: 900px;
+
+  font-size: clamp(28px, 5vw, 64px);
+  font-weight: 700;
+  line-height: 1.45;
+
+  text-align: left;
+  color: rgba(120, 120, 120, 0.95);
+
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+
+  opacity: 0;
+  transform: translateY(calc(10px - 4vh));
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.textbox.visible {
+  opacity: 1;
+  transform: translateY(-4vh);
+}
+
+
+/* Line spacing */
+.line {
+  padding: 4px 0;
+}
+
+/* Page number */
+.page-box {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+
+  background-color: rgba(0, 0, 0, 0.65);
+  color: white;
+
+  padding: 4px 8px;
+  border-radius: 6px;
+
+  font-size: 12px;
+
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.page-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Navigation */
+.nav-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  display: flex;
+  gap: 8px;
+}
+
+.nav-buttons button {
+  padding: 6px 12px;
+  font-size: 14px;
+
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+
+  background-color: rgba(26, 26, 26, 0.85);
+  color: white;
+
+  transition:
+    transform 0.15s ease,
+    background-color 0.2s ease;
+}
+
+.nav-buttons button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background-color: rgba(40, 40, 40, 0.9);
+}
+
+.nav-buttons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+
+.music-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.page-image {
+  width: 60%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  display: block;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+.music-toggle {
+  padding: 6px 14px;
+  font-size: 13px;
+
+  border-radius: 999px;
+  border: none;
+
+  background-color: rgba(26, 26, 26, 0.75);
+  color: white;
+
+  cursor: pointer;
+
+  transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.music-toggle:hover {
+  background-color: rgba(40, 40, 40, 0.9);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.music-toggle:active {
+  transform: scale(0.97);
 }
 
-.card {
-  padding: 2em;
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 120px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+
+  transition: background 0.25s ease;
 }
 
-.read-the-docs {
-  color: #888;
+.volume-slider:hover {
+  background: rgba(255, 255, 255, 0.35);
 }
+
+/* Track */
+.volume-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.4)
+  );
+  border-radius: 4px;
+}
+
+.volume-slider::-moz-range-track {
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.4)
+  );
+  border-radius: 4px;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 120px;
+  height: 4px; /* track height */
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Track */
+.volume-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+}
+
+.volume-slider::-moz-range-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
+}
+
+/* Thumb — smaller AND centered */
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+
+  margin-top: -3px; /* THIS centers it */
+}
+
+.volume-slider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: white;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+
+

@@ -1,35 +1,127 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect, useRef } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const pages = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", 11, 12];
+
+const pageText = [
+  "Hey Libby",
+  "I hope you had a nice Christmas with your family",
+  "I wanted this to be a lot cooler, but I ran out of time, haha",
+  "So you're just gonna have to settle with this:",
+  "When we met up again over the summer, I never would've thought we'd be here now",
+  "But I'm really glad we are",
+  "For the last few months,\nyou have been nothing but a constant force of good in my life",
+  "Even at my lowest points,\nyou were a warm and\ncomforting presence",
+  "I hope you know you are\na beautiful soul,\nand that I am very glad\nto have met you again",
+  "I treasure you so very much;\nI hope you share\nthe same sentiment",
+  "Here's a picture of a deer (click next bc ion know how to code)",
+  "",
+
+];
+
+export default function App() {
+  const [page, setPage] = useState(0);
+  const [displayText, setDisplayText] = useState(pageText[0]);
+  const [visible, setVisible] = useState(false);
+
+  const [playing, setPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.4); // soft default
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    requestAnimationFrame(() => setVisible(true));
+  }, []);
+
+  useEffect(() => {
+    setVisible(false);
+    const swap = setTimeout(() => {
+      setDisplayText(pageText[page]);
+      setVisible(true);
+    }, 300);
+    return () => clearTimeout(swap);
+  }, [page]);
+
+  // Keep audio volume in sync
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
+
+    if (playing) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+
+    setPlaying(!playing);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      {/* Background music */}
+      <audio ref={audioRef} loop preload="auto">
+        <source src="/lovergirl.mp3" type="audio/mpeg" />
+      </audio>
 
-export default App
+      <div className="container">
+        <div className={`textbox ${visible ? "visible" : ""}`}>
+          {page === 11 ? (
+            <img
+              src="/deer.jpeg"   
+              alt="A deer"
+              className="page-image"
+            />
+          ) : (
+            displayText.split("\n").map((line, i) => (
+              <div key={i} className="line">
+                {line}
+              </div>
+            ))
+          )}
+
+        </div>
+      </div>
+
+      {/* Music controls */}
+      <div className="music-controls">
+        <button className="music-toggle" onClick={toggleMusic}>
+          {playing ? "Pause Music" : "Play Music"}
+        </button>
+
+        <input
+          className="volume-slider"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={(e) => setVolume(Number(e.target.value))}
+        />
+      </div>
+
+      <div className="page-box visible">{pages[page]}</div>
+
+      <div className="nav-buttons">
+        <button
+          onClick={() => setPage((p) => Math.max(p - 1, 0))}
+          disabled={page === 0}
+        >
+          Previous
+        </button>
+        <button
+          onClick={() =>
+            setPage((p) => Math.min(p + 1, pages.length - 1))
+          }
+          disabled={page === pages.length - 1}
+        >
+          Next
+        </button>
+      </div>
+    </>
+  );
+}
