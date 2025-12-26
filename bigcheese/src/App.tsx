@@ -90,7 +90,7 @@ export default function App() {
         {/* Now Playing: Image + Song Name */}
         <div className="now-playing">
         <img src="/stuff/laufey.jpg" alt="Album art" className="song-art" />
-          <span className="song-title">Now Playing: Lover Girl</span>
+          <span className="song-title">Lover Girl by Laufey</span>
         </div>
 
         <button className="music-toggle" onClick={toggleMusic}>
