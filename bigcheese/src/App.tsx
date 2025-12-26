@@ -64,14 +64,14 @@ export default function App() {
     <>
       {/* Background music */}
       <audio ref={audioRef} loop preload="auto">
-        <source src="/lovergirl.mp3" type="audio/mpeg" />
+        <source src="/stuff/lovergirl.mp3" type="audio/mpeg" />
       </audio>
 
       <div className="container">
         <div className={`textbox ${visible ? "visible" : ""}`}>
           {page === 11 ? (
             <img
-              src="/deer.jpeg"
+              src="/stuff/deer.jpeg"
               alt="A deer"
               className="page-image"
             />
